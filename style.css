@@ -1,0 +1,120 @@
+body{
+	background: url(img/patterrific_patt_8greencloudyflorals01.jpg) #000; /* Åkersten pillat*/
+	color: white;
+	width: 710px;
+	margin: 30px auto;
+	font-size: 16px;
+	font-family: 'Architects Daughter', cursive;
+}
+a, #bread a {
+	color: white;
+	/*
+	font-family: Muli,'Josefin Slab', helvetica, verdana;
+	*/
+}
+a:hover, #bread a:hover {
+	text-decoration: underline;
+}
+h1{
+	font-family: 'Permanent Marker', Arial;
+}
+h2 {
+	font-family: 'Architects Daughter', cursive;
+	margin: 0 auto 5px auto;
+	padding: 10px 0 0 0;
+	text-align: center;
+	color: white;
+	text-transform: capitalize;
+}
+hr {
+	margin: 0;
+	height: 2px;
+	background-color: white;
+}
+#accordion {
+	width: 210px;
+	margin-top: -1px;
+}
+#accordion li:last-child {
+	margin-top:7px;
+}
+#accordion ul {
+	list-style-type: none;
+	margin:0;
+	padding:0;
+}
+#beskrivning, #besk, #galleri, #accordion div .ui-accordion-content {
+	font-family:'Architects Daughter', cursive;
+	font-size: 14px;
+}
+#beskrivning{
+	font-size: 14px;
+}
+#besk{
+	border:1px solid #AAAAAA;
+	background:#F8F4E6;
+	color:#222222;
+	padding:30px;
+}
+#bread {
+	padding: 3px 0 3px 5px;
+	/*border-bottom: 2px solid #FFF;*/
+}
+#bread a {
+	text-decoration: none;
+	text-transform: capitalize;
+}
+#container{
+	background: url(img/bgt.png);
+	background: rgba(168,168,168,0.5);
+	min-height: 400px;
+	padding-bottom: 5px;
+}
+#mainheader{
+	width: 710px;
+	background: url(img/top_bottom.png) #F8F4E6 no-repeat;
+	height: 48px;
+	color: #000;
+	position: relative;
+	cursor: pointer;
+}
+#mainheader>span{
+	display: block;
+	padding-left: 60px;
+}
+#mainheader button{
+	border-radius:0;
+	position: absolute;
+	right: -1px;
+	top: 0px;
+	height: 48px;
+}
+#tools{
+	position:absolute;
+	position:fixed;
+	top:0px;
+	left:0px;
+	background:#fff url(img/background_green2.jpg);
+	width:100%;
+	padding:6px 0 6px 0;
+	z-index:100;
+	border-bottom:9px groove rgba(100,100,100,0.2);
+}
+#tools .first{
+	margin-left:10px;
+}
+#tools span select{
+	padding:0 0 0 20px;
+}
+#tabs {
+	width: 470px;
+	overflow: hidden;
+}
+#tabs, #accordion {
+	margin-left: 5px;
+	float:left;
+}
+.mer{
+	font-size: 10pt;
+	font-style: italic;
+}
