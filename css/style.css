@@ -319,6 +319,59 @@ ul.nyheter li:last-child, ul.kalender li:last-child {
 	border-bottom:0;
 }
 
+/* admin/rum.php */
 
+#sortable {
+	list-style-type: none;
+}
+#sortable li {
+	height: auto;
+	display: block;
+}
+#sortable li div span.ui-icon {
+	border: 1px solid #8C58BE;
+	background-color: #E6B2FF;
+	margin-left: 5px;
+}
+#sortable li div span.ui-icon.ui-icon-closethick {
+	cursor: pointer;
+}
+#sortable li div span.ui-icon.ui-icon-arrow-4-diag {
+	cursor: move;
+}
+.sortable-placeholder {
+	border: 3px dashed #ccc;
+	background: #e6e6e6;
+	height: 200px;
+	margin-bottom: 15px;
+}
+#beskrivning, #list-rum {
+	color:#000;
+}
+#beskrivning {
+	overflow:hidden;
+}
+#list-rum {
+	width:475px;
+	margin-left:5px;
+}
+#list-rum a {
+	width:475px;
+	text-transform:capitalize;
+	margin-bottom: 5px;
+}
+#tabs li {
+	/*height:33px;*/
+}
+#dialog-tab input,#dialog-tab textarea {
+	margin:0px;
+}
+#dialog-kontakt input,#dialog-kontakt textarea {
+	margin:0px;
+}
+#accordion input{
+	width:100px;
+}
+#kont {padding: 6px;}
 
 
