@@ -16,11 +16,7 @@
 
 <script type="text/javascript">
 <?php $cond = (isset($_GET['error']) && $_GET['error'] == 1) || (isset($_GET['login_required']) && $_GET['login_required'] == 1);?>
-var cont = 1, <?php echo "error = ".($cond?"true":"false").";";
-	if (current_user()) {
-		if (current_user())
-			echo "var cur = '".current_user()."';";
-	}
+var cont = 1, <?php echo "error = ".($cond?"true":"false").", cur = '".current_user()."';";
 ?>
 
 	$(document).ready(function(){
@@ -46,7 +42,7 @@ var cont = 1, <?php echo "error = ".($cond?"true":"false").";";
 		$('#mainheader>span').click(function(){
 			window.location='index.php';
 		});
-		$('#accordion').accordion({ autoHeight:false, active:0});
+		$('#accordion').accordion({ header: "h3", navigation: true});
 		$('#tabs').tabs();
 		$('.button').button();
 		$('#loginform input').keydown(function(e){

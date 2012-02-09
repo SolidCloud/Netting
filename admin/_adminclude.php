@@ -1,44 +1,33 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<title>Inloggad - <?php echo $_SESSION['user']; ?></title>
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-	<link rel="stylesheet" type="text/css" href="../style.css" />
-	<link type="text/css" href="../css/custom-theme/jquery-ui-1.8.16.custom.css" rel="stylesheet" />
-	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js"></script>
-	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
-	<style type="text/css" media="screen">
-	#error {
-		border: 3px groove #F33;
-		padding: 5px;
-		margin:10px 0 10px 0;
-		color: #F33;
-	}
-	</style>
-	<script type="text/javascript" src="../js/json.js"></script>
-	<link href='http://fonts.googleapis.com/css?family=Architects+Daughter|Permanent+Marker|Aclonica|Muli&v2' rel='stylesheet' type='text/css' />
-<?php 
-echo "<script type='text/javascript'>
-	var data=".json_encode(simplexml_load_file('../rum/'.$currentRum.'/data.xml')).";
-		if(!data)data={};
-		if(!data.nyheter){data.nyheter={nyhet:[]};}
-		if(!data.nyheter.nyhet)data.nyheter.nyhet=[];
-		if(!data.kontakter){data.kontakter={kontakt:[]};}
-		if(!data.kontakter.kontakt)data.kontakter.kontakt=[];
-		if(!data.kalender){data.kalender={date:[]};}
-		if(!data.kalender.date)data.kalender.date=[];"; 
-
-echo "data.rum=[];";
-echo "data.rum.delete=[];\n";
-echo "!(data.kontakter.kontakt instanceof Array)&&(data.kontakter.kontakt=[data.kontakter.kontakt]);";
-echo "var tab_counter = ".count($SimpleTab).";";
-echo "</script>";
-?>
+<meta charset="utf-8">
+<title>Inloggad - <?php echo $_SESSION['user']; ?></title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<link rel="stylesheet" type="text/css" href="../css/style.css" />
+<link type="text/css" href="../css/custom-theme/jquery-ui-1.8.16.custom.css" rel="stylesheet" />
+<link href='http://fonts.googleapis.com/css?family=Architects+Daughter|Permanent+Marker|Aclonica|Muli' rel='stylesheet' type='text/css' />
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
+<script type="text/javascript" src="../js/json.js"></script>
+<script type="text/javascript">
+	var data = <?php echo json_encode(simplexml_load_file('../rum/'.$currentRum.'data.xml'));?>;
+	if(!data) data = {};
+	if(!data.nyheter) data.nyheter = {nyhet: []};
+	if(!data.nyheter.nyhet) data.nyheter.nyhet = [];
+	if(!data.kontakter)data.kontakter = {kontakt: []};
+	if(!data.kontakter.kontakt)data.kontakter.kontakt = [];
+	if(!data.kalender) data.kalender = {date:[]};
+	if(!data.kalender.date) data.kalender.date = [];
+	data.rum=[];
+	data.rum.delete=[];
+	!(data.kontakter.kontakt instanceof Array)&&(data.kontakter.kontakt=[data.kontakter.kontakt]);
+	var tab_counter = <?php echo count($SimpleTab); ?>;
+</script>
 <script type="text/javascript">
 	function kontakterClick(t,undefined){
 			var k=undefined; 
-			if(t!=undefined){ 
+			if(t!=k){
 				var i=$('#kont .ui-button').index($(t));
 				k=data.kontakter.kontakt[i];
 				$('#namn').val(typeof k.namn == 'object'?"":k.namn);
@@ -90,14 +79,11 @@ echo "</script>";
 	$(function(){
 		$('#tools').find('button').button();
 		$('#mainheader').find('button').button().click(function(){
-			window.location="logout.php?rum=<?php echo $_GET['rum']; ?>";
+			window.location="logout.php?rum=<?php echo isset($_GET['rum'])?$_GET['rum']:''; ?>";
 		});
 		$('#kont .ui-button').click(function(){
 			kontakterClick(this);
 		});
-		/*$('#mainheader>span').click(function(){
-			window.location='../index.php';
-		});*/
 		$('#accordion').accordion({ header: "h3", autoHeight:false, navigation: true});
 		
 		/** ------------------------------------------------------------------------**/ 
@@ -201,7 +187,7 @@ echo "</script>";
 	});
 	var rum={};
 	rum.add=function(pa){
-		var li = $('<li style="padding:10px 0 10px 0;border-bottom:2px groove #ccc;" />');
+		var li = $('<li>');
 		li.html('<input type="text" name="'+(pa=="nyheter"?"nyhet":"date")+'[]" /><span style="float:right;" onclick="this.parentNode.outerHTML=\'\';rum.update();" class="del ui-icon ui-icon-trash"></span>');
 		if(pa=="nyheter")
 			$('#accordion .nyheter').append(li);

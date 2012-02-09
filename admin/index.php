@@ -1,11 +1,6 @@
 <?php
 	session_start();
-	function translate($string) {
-		$search  = array( "\\t",    "\\n",    "\\r",   " ");
-		$replace = array( "&#09;",  "<br/>",  "<br/>", "&#32;");
-		return str_replace($search, $replace, $string);
-	}
-	
+
 	include "upload.php";
 	require_once "auth.php";
 	require_login();
@@ -13,6 +8,7 @@
 	function rrmdir($path){
 		return is_file($path)?@unlink($path):array_map('rrmdir',glob($path.'/*'))==@rmdir($path);
 	} 
+	$currentRum = "";
 	if($_SESSION["user"]!="admin"){
 		include_once("_adminclude.php");
 		exit("<div style='
@@ -23,7 +19,7 @@
 		' >Du har inte tillräcklig behörighet för att redigera denna sidan!<br/>
 		<a href=\"rum.php?rum=". str_replace(" ","_",$_SESSION["user"])."\">Gå tillbaka till din sida.</a><img src='../img/premission-denied.png' style='float:right;width:200px;' /></div>");
 	}
-	if($_POST["text_content_sida"]){	//Redigera hemsidan
+	if(isset($_POST["text_content_sida"])){	//Redigera hemsidan
 		$sim = simplexml_load_file("../rum/data.xml");
 		$sim->tab->desk = "<![CDATA[".$_POST["text_content_sida"]."]]>";
 		$ifle=fopen("../rum/data.xml","w") or die("error!");
@@ -31,7 +27,7 @@
 		fclose($ifle);
 	}
 	
-	if($_POST["nyheter"]=="nyhet"){
+	if(isset($_POST["nyheter"]) && $_POST["nyheter"]=="nyhet"){
 		$path="../rum/data.xml";
 		$sim=simplexml_load_file($path);
 		unset($sim->nyheter);
@@ -41,7 +37,7 @@
 		}
 		fwrite(fopen($path,"w"),$sim->asXML());
 	}
-	if($_POST["kalender"]=="date"){
+	if(isset($_POST["kalender"]) && $_POST["kalender"] == "date"){
 		$path="../rum/data.xml";
 		$sim=simplexml_load_file($path);
 		for($i=0;$i < count($_POST["date"]) || $i < count($sim->kalender->date) ;$i++){
@@ -77,13 +73,13 @@
 		fwrite(fopen($path,"w"),$sim->asXML());
 	}
 	
-	if($_POST["del_rum"]=="true"){	//delete rum
+	if(isset($_POST["del_rum"]) && $_POST["del_rum"]=="true"){	//delete rum
 		if($_POST["cur_rum"]&&$_POST["cur_rum"]!=""&&is_dir("../rum/".str_replace(" ","_",$_POST["cur_rum"]))){
 			rrmdir("../rum/".str_replace(" ","_",$_POST["cur_rum"]));
 			deletePass($_POST["cur_rum"]);
 		}
 	}
-	else if($_POST["rum"]){			//redigera rum eller lägg till
+	else if(isset($_POST["rum"])){			//redigera rum eller lägg till
 		$path="../rum/".$_POST["cur_rum"];
 		$newPath=str_replace(" ","_","../rum/".$_POST["rum"]);
 		if($_POST["cur_rum"]==""){	//Lägga till nytt rum
@@ -170,7 +166,7 @@
 	}
 ?>
 <script type="text/javascript" charset="utf-8">
-	var ar = <?php echo json_encode($roomusers); ?>;
+	var ar = <?php echo json_encode(isset($roomusers)?$roomusers:'[]'); ?>;
 	$(document).ready(function(){
 		$('#edit-room').dialog({
 			width:"auto" ,
@@ -274,106 +270,14 @@
 
 		$(".inneboende:not(.add)").mouseover(function(){
 			$(this).css("background-position","0px 220px");
-			$(this).parent().find(".desc").css("visibility","visible");
+			$(".desc",this).show();
 		});
 		$(".inneboende:not(.add)").mouseout(function(){
 			$(this).css("background-position","0px 0px");
-			$(this).parent().find(".desc").css("visibility","hidden");
+			$(".desc",this).hide();
 		});
 	});
 </script>
-<style type="text/css" media="screen">
-	#beskrivning, #list-rum {color:#000;}
-	#beskrivning {height:150px;overflow-y:auto;}
-	#list-rum {width:475px;margin-left:5px;padding-left:15px;}
-	#list-rum a {width:475px;margin-bottom: 5px;text-decoration:none;}
-	/* Alltså alla olika rummen om någon inte fattar*/
-	.inneboende{
-		width:220px;
-		height:220px;
-		background:url("../img/door_icon.png");
-		float:left;
-		margin:15px 5px 15px 5px;
-		border-radius:2px;
-		text-align:center;
-		position:relative;
-		color: #333;
-		font-weight: bold;
-		overflow: hidden;
-	}
-	.inneboende.add{
-		width:120px;
-		height:160px;
-		background:rgba(50,50,50,0.7);
-		float:left;
-		margin:20px;
-		border-radius:2px;
-		text-align:center;
-		padding-top:20px;
-	}
-	.inneboende img{
-		width:200px;
-		box-shadow:0 0 2px #000;
-		padding:10px;
-	}
-	.inneboende.add img{
-		width:100px;
-		box-shadow:0 0 0px #000;
-		padding:10px;
-	}
-	#list-rum a div.desc {
-		text-decoration:none;
-		width: 220px;
-		height: 190px;
-		padding-top:30px;
-		position:absolute;
-		visibility: hidden;
-	}
-	#list-rum a div div.namn {
-		text-decoration:underline;
-		text-transform:capitalize;
-	}
-	#list-rum a div div.besk {
-		margin-top:10px;
-		text-decoration:none;
-	}
-	#list-rum .add {
-		width:auto;
-		padding:30px;
-		height:auto;
-		background:rgba(200,200,200,0.2);
-	}
-	#list-rum .add:hover {
-		width:auto;
-		padding:30px;
-		height:auto;
-		background:rgba(200,200,200,0.4);
-	}
-	.left_edit , .right_edit{
-		float: left;
-		margin-left: -20px;
-		position:relative;
-		z-index: 2;
-		/*background-color: #fed22f;*/
-		background-color: #ccc;
-		border:1px solid #000;
-		border-radius:2px;
-	}
-	.left_edit{
-		left:10px;
-		top:15px;
-	}
-	.right_edit{
-		top:265px;
-		left:-450px;
-	}
-	#beskr{
-		padding: 0; 
-	}
-	#accordion input{
-		width:100px;
-	}
-</style>
 </head>
 <body>
 <div id="media0" style="display:none;">
@@ -507,7 +411,7 @@
 								echo '<span class="left_edit">
 									<span class="button ui-icon ui-icon-tag" style="float:left;" title="Redigera" onclick="$(\'#cur_rum\').val(\'null\');$(\'#edit-room\').dialog(\'open\');"></span>									
 								</span>';
-							echo '<a href="rum.php?rum='.$file.'"><div class="inneboende"><div class="desc"><div class="namn" >'.str_replace('_',' ',$file).'</div><div class="besk">'.$beskriv.'</div><input type="hidden" value="'.$access.'" /></div></div></a>';
+							echo '<a href="rum.php?rum='.$file.'"><div class="inneboende"><div class="desc"><div class="namn" >'.str_replace('_',' ',$file).'</div><div class="besk">'.$beskriv.'</div><input type="hidden" /></div></div></a>';
 							if(($index % 2) == 0)
 								echo '<span class="left_edit">
 									<span class="button ui-icon ui-icon-tag" style="float:left;" title="Redigera" onclick="$(\'#cur_rum\').val(\'null\');$(\'#edit-room\').dialog(\'open\');"></span>									
@@ -537,13 +441,13 @@
 								if(count($SimpleNyh) > 0){ 
 									if(isset($_POST["data"])){
 										for($i=0;$i<count($SimpleNyh);$i++){
-											echo '<li style="padding:10px 0 10px 0;border-bottom:2px groove #ccc;" >'.$SimpleNyh["nyhet"].' <span>X</span></li>';
+											echo '<li>'.$SimpleNyh["nyhet"].' <span>X</span></li>';
 										}
 									}
 									else{ 
 										$i=0;
 										foreach ($SimpleNyh as $nyhet){
-											echo '<li style="padding:10px 0 10px 0;border-bottom:2px groove #ccc;" >'.$nyhet.'</li>';
+											echo '<li>'.$nyhet.'</li>';
 											$i++;
 										}
 									}
@@ -565,12 +469,12 @@
 								if(count($SimpleCal) >0){
 									if(isset($_POST["data"])){
 										for($i=0;$i<count($SimpleCal);$i++){
-											echo '<li style="padding:10px 0 10px 0;border-bottom:2px groove #ccc;" >'.$SimpleCal["date"].'</li>';
+											echo '<li>'.$SimpleCal["date"].'</li>';
 										}
 									}
 									else{
 										foreach ($SimpleCal as $date){
-											echo '<li style="padding:10px 0 10px 0;border-bottom:2px groove #ccc;" >'.$date.'</li>';
+											echo '<li>'.$date.'</li>';
 										}
 									}
 								}
@@ -602,7 +506,7 @@
 										foreach($SimpleCont->children() as $kontakt){
 											echo "<table class='ui-button ui-corner-all' style='width:100%;border:0px solid #000;padding:2px;text-align:left;' onmouseover='this.className=\"ui-button ui-corner-all ui-state-hover\";' onmouseout='this.className=\"ui-button ui-corner-all\";' ><tr>";
 											if ($kontakt->img&&$kontakt->img!='#')
-												echo '<td><img width="30" align="left" onerror="this.src=\'../img/top_bottom.png\';console.warn(\'Försök att läsa kontakt bild misslyckades!\');return false;" style="margin-right:3px;" src="'.$kontakt->img.'" /></td>';
+												echo '<td><img width="30" align="left" style="margin-right:3px;" src="'.$kontakt->img.'" /></td>';
 											else
 												echo '<td><img width="30" align="left" style="margin-right:3px;display:inline;" src="../img/top_bottom.png" /></td>';
 											echo "<td>";

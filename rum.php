@@ -35,7 +35,7 @@
 			$Rubrum[$index]=null;
 			if(strpos($file,"galleri_")!==false){
 				$Rubrum[$index]=$file;
-				if (file_exists("rum/$currentRum/"/*$file_exists*/."/data.xml")){
+				if (file_exists("rum/$currentRum/$file/data.xml")){ //OMG OMGOMGPOMGOMGOMGOMGOMGOMGO [auth.php också!!!]
 					$rum[$index]=simplexml_load_file("rum/$currentRum/$file/data.xml");
 				}
 				$index++;

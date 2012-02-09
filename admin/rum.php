@@ -7,7 +7,7 @@
 	}
 	require_once "auth.php";
 	require_login();
-	$currentRum=$_GET["rum"];
+	$currentRum=$_GET["rum"]."/";
 	if(str_replace(" ","_",$_SESSION["user"])!=$currentRum && $_SESSION["user"]!="admin"){
 		include_once("_adminclude.php");
 		exit("<div style='
@@ -19,7 +19,7 @@
 		<a href=\"rum.php?rum=". str_replace(" ","_",$_SESSION["user"])."\">Gå tillbaka till din sida.</a><img src='../img/premission-denied.png' style='float:right;width:200px;' /></div>");
 	}
 	
-	if($_POST["nyheter"]=="nyhet"){
+	if(isset($_POST["nyheter"]) && $_POST["nyheter"]=="nyhet"){
 		$path="../rum/".$currentRum."/data.xml";
 		$sim=simplexml_load_file($path);
 		
@@ -31,11 +31,11 @@
 		}
 		fwrite(fopen($path,"w"),$sim->asXML());
 	} 
-	if($_POST["kalender"]=="date"){
+	if(isset($_POST["kalender"]) && $_POST["kalender"]=="date"){
 		$path="../rum/".$currentRum."/data.xml";
 		$sim=simplexml_load_file($path);
-		for($i=0;$i < count($_POST["date"]) || $i < count($sim->kalender->date) ;$i++){
-			if($i < count($_POST["date"]))
+		for($i=0; isset($_POST["date"]) && $i < count($_POST["date"]) || $i < count($sim->kalender->date) ;$i++){
+			if(isset($_POST["date"]) && $i < count($_POST["date"]))
 				$sim->kalender->date[$i]=$_POST["date"][$i];
 			else 
 				unset($sim->kalender->date[$i]);
@@ -106,7 +106,7 @@
 		mkdir("../rum/".$rum."/galleri_".$name);
 		fwrite(fopen("../rum/".$rum."/galleri_".$name."/data.xml","w"), '<?xml version="1.0" encoding="utf-8"?><galleri></galleri>');
 	}
-	if(($imgbesk = $_POST["imgbesk"]) && ($imgnamn = $_POST["imgnamn"])){
+	if(isset($_POST["imgbesk"]) && ($imgbesk = $_POST["imgbesk"]) && ($imgnamn = $_POST["imgnamn"])){
 		if($_FILES["imgfiles"]) {
 			$sim= simplexml_load_file("../rum/".$_GET["rum"]."/".$_POST["tab_title"]."/data.xml");
 			
@@ -168,7 +168,7 @@
 			fwrite(fopen($path,"w"),$sim->asXML());
 		}
 	}
-	else if($_POST["tab_title"]){	//Redigera flik
+	else if(isset($_POST["tab_title"])){	//Redigera flik
 		if(isset($_POST["index"])){
 			if($_POST["tabort_flik"]=="true"){
 				if(is_dir("../rum/".$currentRum."/text_".$_POST["tab_title"])){
@@ -201,7 +201,7 @@
 					rename ('../rum/'.$currentRum.'/text_'.$_POST["tab_title_prev"],'../rum/'.$currentRum.'/text_'.$_POST["tab_title"]);
 		}
 	}
-	else if($_POST["besk_textA"]) {
+	else if(isset($_POST["besk_textA"])) {
 		$path="../rum/".$_GET["rum"]."/".$_POST["rum_cur"]."/data.txt";
 		if(is_file($path)){
 			fwrite(fopen($path,"w"),$_POST["besk_textA"]);
@@ -239,7 +239,7 @@
 			$index++;
 		}
 	}
-	if($_POST["rum"] && $_POST["access"]){
+	if(isset($_POST["rum"]) && isset($_POST["access"])){
 		addPass($_POST["rum"],$_POST["access"]);
 		createRoom($_POST["rum"]);
 	}
@@ -659,13 +659,13 @@
 								if(count($SimpleNyh) > 0){ 
 									if(isset($_POST["data"])){
 										for($i=0;$i<count($SimpleNyh);$i++){
-											echo '<li style="padding:10px 0 10px 0;border-bottom:2px groove #ccc;" >'.$SimpleNyh["nyhet"].' <span>X</span></li>';
+											echo '<li>'.$SimpleNyh["nyhet"].' <span>X</span></li>';
 										}
 									}
 									else{ 
 										$i=0;
 										foreach ($SimpleNyh as $nyhet){
-											echo '<li style="padding:10px 0 10px 0;border-bottom:2px groove #ccc;" >'.$nyhet.'</li>';
+											echo '<li>'.$nyhet.'</li>';
 											$i++;
 										} 
 									}
@@ -684,15 +684,15 @@
 								<input type="hidden" name="kalender" value="date" />
 							<?php
 								echo '<ul class="kalender" >';
-								if(count($SimpleCal) >0){
+								if(count($SimpleCal) > 0){
 									if(isset($_POST["data"])){
-										for($i=0;$i<count($SimpleCal);$i++){
-											echo '<li style="padding:10px 0 10px 0;border-bottom:2px groove #ccc;" >'.$SimpleCal["date"].'</li>';
+										for($i=0;$i < count($SimpleCal); $i++){
+											echo '<li>'.$SimpleCal["date"].'</li>';
 										}
 									}
 									else{
 										foreach ($SimpleCal as $date){
-											echo '<li style="padding:10px 0 10px 0;border-bottom:2px groove #ccc;" >'.$date.'</li>';
+											echo '<li>'.$date.'</li>';
 										}
 									}
 								}

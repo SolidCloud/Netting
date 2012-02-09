@@ -92,10 +92,6 @@ hr {
 	margin-left: 5px;
 	float:left;
 }
-.mer{
-	font-size: 10pt;
-	font-style: italic;
-}
 /* _include.php */
 
 #error {
@@ -276,5 +272,53 @@ audio {
 	-moz-transition: opacity 0.2s ease-in-out;
 	white-space: normal !important;
 }
+
+/* admin/index.php */
+
+#list-rum .add {
+	width:auto;
+	padding:30px;
+	height:auto;
+	background:rgba(200,200,200,0.2);
+}
+#list-rum .add:hover {
+	width:auto;
+	padding:30px;
+	height:auto;
+	background:rgba(200,200,200,0.4);
+}
+.left_edit , .right_edit{
+	float: left;
+	margin-left: -20px;
+	position:relative;
+	z-index: 2;
+	/*background-color: #fed22f;*/
+	background-color: #ccc;
+	border:1px solid #000;
+	border-radius:2px;
+}
+.left_edit{
+	left:10px;
+	top:15px;
+}
+.right_edit{
+	top:265px;
+	left:-450px;
+}
+#beskr{
+	padding: 0; 
+}
+#accordion input {
+	width:100px;
+}
+ul.nyheter li, ul.kalender li {
+	padding:10px 0;
+	border-bottom: 2px groove #ccc;
+}
+ul.nyheter li:last-child, ul.kalender li:last-child {
+	border-bottom:0;
+}
+
+
 
 
