@@ -1,5 +1,5 @@
 <?php 
-require_once "pass.php";
+//require_once "pass.php";
 
 $users = array(
 	"admin" => "adminpass"

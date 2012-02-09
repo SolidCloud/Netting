@@ -35,7 +35,7 @@
 			$Rubrum[$index]=null;
 			if(strpos($file,"galleri_")!==false){
 				$Rubrum[$index]=$file;
-				if (file_exists("rum/$currentRum/$file_exists/data.xml")){
+				if (file_exists("rum/$currentRum/"/*$file_exists*/."/data.xml")){
 					$rum[$index]=simplexml_load_file("rum/$currentRum/$file/data.xml");
 				}
 				$index++;
@@ -52,21 +52,7 @@
 	
 ?>
 <script type="text/javascript">
-var imgs = [],i=0;
 var time;
-function StringtoXML(text){
-	if (window.ActiveXObject){
-		var doc=new ActiveXObject('Microsoft.XMLDOM');
-		doc.async='false';
-		doc.loadXML(text);
-	} 
-	else {
-		var parser=new DOMParser();
-		var doc=parser.parseFromString(text,'text/xml');
-	}
-	return doc;
-}
-
 $(document).ready(function(){
 	<?php
 	if($handle = opendir('rum/'.$currentRum)){
@@ -93,7 +79,7 @@ $(document).ready(function(){
 						time = setInterval(function(){
 							var tt=$('#thumbs_<?php echo $file; ?>');
 							left_margin = parseInt($('#thumbs_<?php echo $file; ?>').css('margin-left').replace('px',''));
-							if (!(left_margin<=-((tt.attr("imgs")-5)*80+10-86))){//-((imgs-5)*75+(imgs-5)*5)-30)){
+							if (!(left_margin<=-((tt.attr("imgs")-5)*80+10-86))){
 								$('#thumbs_<?php echo $file; ?>').css('margin-left',left_margin-2);
 							}
 							else
@@ -121,119 +107,6 @@ $(document).ready(function(){
 	?>
 });
 </script>
-<style type="text/css">
-.main-view{
-	overflow: hidden;
-	text-align: center;
-	background: #000;
-	color: #fff;
-}
-.images {
-	-webkit-transition: margin-left 0.5s ease-out;
-	-moz-transition: margin-left 0.5s ease-out;
-	-o-transition: margin-left 0.5s ease-out;
-	white-space: nowrap;
-	margin:0;
-	padding:0;
-}
-.images div {
-	height: 293px;
-	width: 446px;
-	display: inline-block;
-	zoom: 1;
-	*display: inline;
-}
-.images .img {
-	margin: 0 auto;
-}
-.ui-widget-content a{
-	color: #fff;
-}
-.thumbs {
-	margin-left: 10px;
-}
-.thumb-view {
-	background: rgba(0,0,0,0.9);
-	padding-top: 5px;
-	text-align: center;
-	white-space: nowrap;
-	position: relative;
-}
-.thumb-container {
-	width: 395px;
-	margin: 0 20px 0 20px;
-	height: 55px;
-	padding: 10px 5px 10px 5px;
-	overflow: hidden;
-}
-.thumb-left, .thumb-right {
-	color: rgb(168,168,168);
-	padding-top: 23px;
-	display: block;
-	position: absolute;
-	height: 35px;
-	width: 20px;
-	top: 5px;
-	background-repeat: no-repeat;
-}
-.thumb-left:hover, .thumb-right:hover{
-	color: rgb(255,255,255);
-}
-.thumb-left { left:0px; cursor:w-resize; }
-.thumb-right { right:0px; cursor:e-resize; }
-.thumb-view img {
-	border: 1px solid #262626;
-	margin-left: 5px;
-	cursor: pointer;
-}
-.thumb-view img:first-child{
-	margin-left:0;
-}
-.current-thumb {
-	outline: 3px solid #ffd907;
-}
-.thumb-width{
-	display: inline-block;
-	width: 75px;
-	padding-right: 5px;
-}
-.imgbesk{
-	position:absolute;
-	top:0;
-	#height:60px !important;
-	width:100% !important;
-	background:rgba(100,100,100,0.8);
-	color:#fff;
-	padding:10px;
-	opacity:0;
-	-webkit-transition: opacity 0.2s ease-in-out;
-	-moz-transition: opacity 0.2s ease-in-out;
-	white-space: normal !important;
-}
-video {
-	height: 300px;
-	width: 100%;
-}
-audio {
-	left: 70px;
-	width: 300px;
-}
-.imgbesk:hover{
-	opacity: 1;
-}
-.imgbesk_img{
-	position: absolute;
-	top: 0;
-	height: 280px !important;
-	width: 100% !important;
-	background: rgba(255,255,255,0.8);
-	color: #fff;
-	padding: 10px;
-	-webkit-transition: opacity 0.2s ease-in-out;
-	-moz-transition: opacity 0.2s ease-in-out;
-	white-space: normal !important;
-}
-</style>
 </head>
 <body>
 <div id="mainheader">

@@ -11,71 +11,15 @@
 	}
 	include "_include.php";
 ?>
-<style type="text/css" media="screen">
-#beskrivning, #list-rum {color:#000;}
-#beskrivning {height:150px;overflow-y:auto;}
-#list-rum {width:475px;margin-left:5px;padding-left:15px;}
-#list-rum a {width:475px;margin-bottom: 5px;text-decoration:none;}
-#container {padding-bottom: 30px;}
-/* Alltså alla olika rummen om någon inte fattar*/
-.inneboende{
-	width:220px;
-	height:220px;
-	background:url("img/door_icon.png");
-	float:left;
-	margin:15px 5px -5px 5px;
-	text-align:center;
-	position:relative;
-	color: #EEE;
-	font-weight: bold;
-	overflow: hidden;
-}
-.inneboende.add{
-	width:120px;
-	height:160px;
-	float:left;
-	margin:20px;
-	border-radius:2px;
-	text-align:center;
-	padding-top:20px;
-}
-.inneboende img{
-	width:200px;
-	box-shadow:0 0 2px #000;
-	padding:10px;
-}
-.inneboende.add img{
-	width:100px;
-	box-shadow:0 0 0px #000;
-	padding:10px;
-}
-#list-rum a div.desc {
-	text-decoration:none;
-	width: 220px;
-	height: 190px;
-	padding-top:30px;
-	position:absolute;
-	visibility: hidden;
-}
-#list-rum a div div.namn {
-	text-decoration:underline;
-	text-transform:capitalize;
-}
-#list-rum a div div.besk {
-	margin-top:10px;
-	text-decoration:none;
-	padding: 3px;
-}
-</style>
 <script type="text/javascript">
 $(document).ready(function(){
 	$(".inneboende").mouseover(function(){
 		$(this).css("background-position","0px 220px");
-		$(this).parent().find(".desc").css("visibility","visible");
+		$(".desc",this).show();
 	});
 	$(".inneboende").mouseout(function(){
 		$(this).css("background-position","0px 0px");
-		$(this).parent().find(".desc").css("visibility","hidden");
+		$(".desc",this).hide();
 	});
 });
 </script>

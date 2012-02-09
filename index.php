@@ -26,6 +26,7 @@ $(document).ready(function(){
 	height: 885px;
 	width: 1280px;
 	background: url(img/door.png) center no-repeat;
+	background-position: 0 0;
 	position: relative;
 }
 .index-bg-open {
