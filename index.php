@@ -2,9 +2,9 @@
 <html>
 <head>
 <title>Vägkorset</title> 
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
-<link href='http://fonts.googleapis.com/css?family=Redressed&v2' rel='stylesheet' type='text/css' />
+<meta charset="utf-8">
+<link href='http://fonts.googleapis.com/css?family=Redressed' rel='stylesheet' type='text/css'>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
 	$('#index-bg-door').click(function(){
@@ -25,12 +25,11 @@ $(document).ready(function(){
 	margin: 0 auto;
 	height: 885px;
 	width: 1280px;
-	background: url(img/door_test.png) center no-repeat;
-	background-position: 0px 0px;
+	background: url(img/door.png) center no-repeat;
 	position: relative;
 }
 .index-bg-open {
-	background: url(img/door_test.png) center no-repeat;
+	background: url(img/door.png) center no-repeat;
 	background-position: 175px -885px;
 }
 #index-bg-door {
@@ -50,11 +49,11 @@ $(document).ready(function(){
 	text-align: center;
 	position: absolute;
 	font-size: 17px;
-	font-family: Redressed, Vrinda;
+	font-family: Redressed, cursive;
 }
 body {
 	overflow: hidden;
-	background: url(img/patterrific_patt_8greencloudyflorals01.jpg) #000; /* Åkersten pillat */
+	background: url(img/bg_florals.jpg) #000; /* Åkersten pillat */
 	padding:0;
 	margin:0;
 }
