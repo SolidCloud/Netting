@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html manifest="cache.manifest">
 <head>
 <title>Vägkorset</title> 
 <meta charset="utf-8">
