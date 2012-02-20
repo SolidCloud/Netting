@@ -2,7 +2,7 @@
 //require_once "pass.php";
 
 $users = array(
-	"admin" => "adminpass"
+	"admin" => ""
 );
 
 function credentials_valid($username, $password){
